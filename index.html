@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bespoke Culinary | Recipe Book</title>
+    
+    <!-- Google Fonts: Playfair Display (Serif) and Inter (Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration for Luxury Aesthetic -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: {
+                            900: '#111111',
+                            800: '#18181A',
+                            700: '#222225',
+                            600: '#333336'
+                        },
+                        gold: {
+                            400: '#D9B76A',
+                            500: '#C4A35A',
+                            600: '#A68A48'
+                        },
+                        offwhite: '#ECEBE8'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-charcoal-900 text-offwhite font-sans antialiased selection:bg-gold-500 selection:text-charcoal-900 overflow-x-hidden">
+
+    <!-- App Wrapper -->
+    <div class="app-wrapper flex flex-col lg:flex-row min-h-screen">
+        
+        <!-- ================= SIDEBAR (CATEGORIES) ================= -->
+        <aside class="category-sidebar w-full lg:w-64 lg:fixed lg:h-screen lg:border-r border-white/5 bg-charcoal-900 z-10 flex flex-col justify-between py-8 px-6">
+            <div>
+                <!-- Brand / Logo -->
+                <div class="brand-logo mb-16">
+                    <h1 class="font-serif text-3xl font-bold tracking-wide">Culinary<span class="text-gold-500">.</span></h1>
+                    <p class="text-xs text-gray-500 tracking-widest uppercase mt-2">Private Collection</p>
+                </div>
+
+                <!-- Navigation / Filters -->
+                <nav class="category-nav flex flex-row overflow-x-auto lg:flex-col gap-6 lg:gap-8 pb-4 lg:pb-0 hide-scrollbar">
+                    <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gold-500 font-medium transition-colors whitespace-nowrap">
+                        <span class="w-8 h-[1px] bg-gold-500 hidden lg:block"></span> All Recipes
+                    </button>
+                    <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
+                        <span class="w-8 h-[1px] bg-transparent hidden lg:block"></span> Breakfast
+                    </button>
+                    <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
+                        <span class="w-8 h-[1px] bg-transparent hidden lg:block"></span> Starters
+                    </button>
+                    <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
+                        <span class="w-8 h-[1px] bg-transparent hidden lg:block"></span> Salads & Soups
+                    </button>
+                    <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
+                        <span class="w-8 h-[1px] bg-transparent hidden lg:block"></span> Main Course
+                    </button>
+                </nav>
+            </div>
+            
+            <!-- User/Profile area (Decorative) -->
+            <div class="hidden lg:flex items-center gap-3 mt-12 pt-8 border-t border-white/5">
+                <div class="w-10 h-10 rounded-full bg-charcoal-700 flex items-center justify-center text-gold-500 font-serif">A</div>
+                <div class="text-sm text-gray-400">Head Chef</div>
+            </div>
+        </aside>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="main-content flex-1 lg:ml-64 p-6 md:p-12 xl:p-16">
+            
+            <!-- Header Row -->
+            <header class="top-bar flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-16">
+                
+                <!-- Search Bar -->
+                <div class="search-container relative w-full md:w-96 group">
+                    <i class="fa-solid fa-search absolute left-0 top-3 text-gray-500 group-focus-within:text-gold-500 transition-colors"></i>
+                    <input type="text" placeholder="Search ingredients, names..." class="js-search-input w-full bg-transparent border-b border-white/10 py-2 pl-8 pr-4 text-sm text-offwhite placeholder-gray-600 focus:outline-none focus:border-gold-500 transition-colors">
+                </div>
+
+                <!-- Add Recipe Button -->
+                <button class="add-recipe-btn js-open-add-modal flex items-center gap-3 bg-gold-500 hover:bg-gold-400 text-charcoal-900 px-6 py-3 rounded-none text-sm font-medium tracking-wide uppercase transition-all  hover:translate-x-[2px] hover:translate-y-[2px]">
+                    <i class="fa-solid fa-plus"></i> Add Recipe
+                </button>
+            </header>
+
+            <!-- Page Title -->
+            <div class="mb-12">
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl text-offwhite font-light">Curated <br> <span class="text-gray-500 italic">Gastronomy</span></h2>
+            </div>
+
+            <!-- ================= RECIPE GRID ================= -->
+            <div class="recipe-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-16">
+
+                <!-- Recipe Card 1 -->
+                <article class="recipe-card group cursor-pointer">
+                    <!-- Image Wrapper -->
+                    <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md mb-5 bg-charcoal-800">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Avocado Toast with Egg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out grayscale-[20%] group-hover:grayscale-0">
+                        
+                        <!-- Overlay Gradients (Subtle) -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                        <!-- Card Actions (Absolute) -->
+                        <div class="absolute top-4 left-4 z-10">
+                            <!-- Favorite Toggle -->
+                            <button class="js-favorite-btn text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <!-- Delete Button -->
+                            <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                <i class="fa-solid fa-trash-alt text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card Content -->
+                    <div class="recipe-meta flex flex-col js-open-recipe-modal">
+                        <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Main Course</span>
+                        <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">Truffle Mushroom Risotto</h3>
+                        <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
+                            <span><i class="fa-regular fa-clock mr-1.5"></i> 45 Mins</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                            <span><i class="fa-solid fa-utensils mr-1.5"></i> 4 Servings</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Recipe Card 2 -->
+                <article class="recipe-card group cursor-pointer">
+                    <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md mb-5 bg-charcoal-800">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Heirloom Tomato Salad" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 left-4 z-10">
+                            <button class="js-favorite-btn text-gray-400 hover:text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                <i class="fa-solid fa-trash-alt text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="recipe-meta flex flex-col js-open-recipe-modal">
+                        <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Salads & Soups</span>
+                        <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">Heirloom Tomato Salad</h3>
+                        <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
+                            <span><i class="fa-regular fa-clock mr-1.5"></i> 15 Mins</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                            <span><i class="fa-solid fa-utensils mr-1.5"></i> 2 Servings</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Recipe Card 3 -->
+                <article class="recipe-card group cursor-pointer lg:-mt-12"> <!-- Asymmetrical shift on large screens -->
+                    <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md mb-5 bg-charcoal-800">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Avocado Toast with Egg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out grayscale-[20%] group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 left-4 z-10">
+                            <button class="js-favorite-btn text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                <i class="fa-solid fa-trash-alt text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="recipe-meta flex flex-col js-open-recipe-modal">
+                        <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Breakfast</span>
+                        <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">Poached Egg on Rye</h3>
+                        <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
+                            <span><i class="fa-regular fa-clock mr-1.5"></i> 20 Mins</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                            <span><i class="fa-solid fa-utensils mr-1.5"></i> 1 Serving</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ================= RECIPE DETAILS MODAL ================= -->
+    <!-- Add 'hidden' class to root div to hide. Removed for structural preview, assuming JS will control it. -->
+    <div class="recipe-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-md hidden transition-opacity">
+        
+        <div class="recipe-modal-window relative w-full max-w-5xl max-h-[90vh] bg-charcoal-800 rounded-lg shadow-2xl flex flex-col lg:flex-row overflow-hidden border border-white/10">
+            
+            <!-- Close Button -->
+            <button class="js-close-recipe-modal absolute top-4 right-4 z-20 w-10 h-10 bg-charcoal-900/80 hover:bg-gold-500 text-offwhite hover:text-charcoal-900 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <!-- Left: Hero Image -->
+            <div class="w-full lg:w-2/5 h-64 lg:h-auto bg-charcoal-700 relative">
+                <img src="https://images.unsplash.com/photo-1626804475297-41609ea004eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Recipe Details" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-charcoal-800 to-transparent lg:hidden"></div>
+            </div>
+
+            <!-- Right: Content Scrollable -->
+            <div class="w-full lg:w-3/5 overflow-y-auto hide-scrollbar p-8 lg:p-12">
+                <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold">Main Course</span>
+                <h2 class="font-serif text-3xl lg:text-4xl text-offwhite mt-2 mb-6">Truffle Mushroom Risotto</h2>
+                
+                <div class="flex items-center gap-6 pb-6 border-b border-white/10 mb-8">
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1">Prep Time</span>
+                        <span class="text-sm font-medium text-offwhite">15 Mins</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1">Cook Time</span>
+                        <span class="text-sm font-medium text-offwhite">30 Mins</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1">Yields</span>
+                        <span class="text-sm font-medium text-offwhite">4 Servings</span>
+                    </div>
+                </div>
+
+                <!-- Ingredients -->
+                <div class="mb-10">
+                    <h4 class="font-serif text-xl text-gold-400 mb-4 italic">The Ingredients</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-sm text-gray-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
+                            1 ½ cups Arborio rice
+                        </li>
+                        <li class="flex items-start text-sm text-gray-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
+                            4 cups chicken or vegetable broth, warmed
+                        </li>
+                        <li class="flex items-start text-sm text-gray-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
+                            1 cup wild mushrooms (cremini, shiitake), sliced
+                        </li>
+                        <li class="flex items-start text-sm text-gray-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
+                            1 tbsp black truffle oil
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Instructions -->
+                <div>
+                    <h4 class="font-serif text-xl text-gold-400 mb-4 italic">Method of Preparation</h4>
+                    <ol class="space-y-6 list-none counter-reset-step">
+                        <li class="relative pl-8 text-sm text-gray-300 leading-relaxed">
+                            <span class="absolute left-0 top-0 font-serif text-gold-500 font-bold text-lg">1.</span>
+                            In a heavy saucepan, heat 2 tablespoons of olive oil over medium heat. Add the finely chopped shallots and sauté until translucent.
+                        </li>
+                        <li class="relative pl-8 text-sm text-gray-300 leading-relaxed">
+                            <span class="absolute left-0 top-0 font-serif text-gold-500 font-bold text-lg">2.</span>
+                            Stir in the Arborio rice, toasting it slightly for about 2 minutes. Pour in white wine and stir continuously until fully absorbed.
+                        </li>
+                        <li class="relative pl-8 text-sm text-gray-300 leading-relaxed">
+                            <span class="absolute left-0 top-0 font-serif text-gold-500 font-bold text-lg">3.</span>
+                            Begin adding the warm broth one ladle at a time, allowing the liquid to absorb before adding the next, stirring frequently.
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ADD RECIPE MODAL ================= -->
+    <div class="add-recipe-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-md hidden transition-opacity">
+        
+        <div class="add-recipe-window relative w-full max-w-2xl bg-charcoal-800 rounded-lg shadow-2xl p-8 md:p-12 border border-white/10 max-h-[90vh] overflow-y-auto hide-scrollbar">
+            
+            <button class="js-close-add-modal absolute top-4 right-4 w-10 h-10 bg-charcoal-700 hover:bg-red-900 text-offwhite rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <h2 class="font-serif text-3xl text-offwhite mb-2">Create Recipe</h2>
+            <p class="text-sm text-gray-500 mb-8">Add a new masterpiece to your private collection.</p>
+
+            <form id="add-recipe-form" class="space-y-6">
+                
+                <!-- Recipe Title -->
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Recipe Title</label>
+                    <input type="text" class="js-input-title w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors" placeholder="e.g. Lavender Honey Glazed Duck">
+                </div>
+
+                <!-- Flex Row (Category & Image) -->
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1">
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Category</label>
+                        <select class="js-input-category w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors appearance-none">
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Starter">Starter</option>
+                            <option value="Salads & Soups">Salads & Soups</option>
+                            <option value="Main Course">Main Course</option>
+                            <option value="Dessert">Dessert</option>
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Image URL</label>
+                        <input type="url" class="js-input-image w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors" placeholder="https://...">
+                    </div>
+                </div>
+
+                <!-- Textarea: Ingredients -->
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Ingredients <span class="text-gray-600 capitalize tracking-normal">(comma separated)</span></label>
+                    <textarea class="js-input-ingredients w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors min-h-[100px]" placeholder="1 cup flour, 2 eggs, pinch of salt..."></textarea>
+                </div>
+
+                <!-- Textarea: Steps -->
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Method</label>
+                    <textarea class="js-input-steps w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors min-h-[120px]" placeholder="Step 1..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4 border-t border-white/5">
+                    <button type="button" class="js-save-recipe-btn w-full bg-gold-500 hover:bg-gold-400 text-charcoal-900 py-4 font-medium tracking-widest uppercase text-sm transition-colors">
+                        Save to Collection
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Minimal CSS to hide scrollbars globally for a cleaner UI look -->
+    <style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body>
+<script src=""></script>
+</html>
