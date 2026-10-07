@@ -109,97 +109,11 @@
             </div>
 
             <!-- ================= RECIPE GRID ================= -->
-            <div class="recipe-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-16">
+            <div class="recipe-grid grid grid-flow-col grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-16">
 
-                <!-- Recipe Card 1 -->
-                <article class="recipe-card group cursor-pointer">
-                    <!-- Image Wrapper -->
-                    <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md mb-5 bg-charcoal-800">
-                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Avocado Toast with Egg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out grayscale-[20%] group-hover:grayscale-0">
-                        
-                        <!-- Overlay Gradients (Subtle) -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+             
 
-                        <!-- Card Actions (Absolute) -->
-                        <div class="absolute top-4 left-4 z-10">
-                            <!-- Favorite Toggle -->
-                            <button class="js-favorite-btn text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <!-- Delete Button -->
-                            <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all">
-                                <i class="fa-solid fa-trash-alt text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card Content -->
-                    <div class="recipe-meta flex flex-col js-open-recipe-modal">
-                        <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Main Course</span>
-                        <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">Truffle Mushroom Risotto</h3>
-                        <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
-                            <span><i class="fa-regular fa-clock mr-1.5"></i> 45 Mins</span>
-                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
-                            <span><i class="fa-solid fa-utensils mr-1.5"></i> 4 Servings</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Recipe Card 2 -->
-                <article class="recipe-card group cursor-pointer">
-                    <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md mb-5 bg-charcoal-800">
-                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Heirloom Tomato Salad" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div class="absolute top-4 left-4 z-10">
-                            <button class="js-favorite-btn text-gray-400 hover:text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all">
-                                <i class="fa-solid fa-trash-alt text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="recipe-meta flex flex-col js-open-recipe-modal">
-                        <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Salads & Soups</span>
-                        <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">Heirloom Tomato Salad</h3>
-                        <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
-                            <span><i class="fa-regular fa-clock mr-1.5"></i> 15 Mins</span>
-                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
-                            <span><i class="fa-solid fa-utensils mr-1.5"></i> 2 Servings</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Recipe Card 3 -->
-                <article class="recipe-card group cursor-pointer lg:-mt-12"> <!-- Asymmetrical shift on large screens -->
-                    <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md mb-5 bg-charcoal-800">
-                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Avocado Toast with Egg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out grayscale-[20%] group-hover:grayscale-0">
-                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div class="absolute top-4 left-4 z-10">
-                            <button class="js-favorite-btn text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all">
-                                <i class="fa-solid fa-trash-alt text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="recipe-meta flex flex-col js-open-recipe-modal">
-                        <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Breakfast</span>
-                        <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">Poached Egg on Rye</h3>
-                        <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
-                            <span><i class="fa-regular fa-clock mr-1.5"></i> 20 Mins</span>
-                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
-                            <span><i class="fa-solid fa-utensils mr-1.5"></i> 1 Serving</span>
-                        </div>
-                    </div>
-                </article>
+           
 
             </div>
         </main>
