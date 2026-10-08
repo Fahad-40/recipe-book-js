@@ -60,7 +60,7 @@
 
                 <!-- Navigation / Filters -->
                 <nav class="category-nav flex flex-row overflow-x-auto lg:flex-col gap-6 lg:gap-8 pb-4 lg:pb-0 hide-scrollbar">
-                    <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gold-500 font-medium transition-colors whitespace-nowrap">
+                    <button class="js-category-filter js-category-filter-allCategories text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gold-500 font-medium transition-colors whitespace-nowrap">
                         <span class="w-8 h-[1px] bg-gold-500 hidden lg:block"></span> All Recipes
                     </button>
                     <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
@@ -74,6 +74,9 @@
                     </button>
                     <button class="js-category-filter text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
                         <span class="w-8 h-[1px] bg-transparent hidden lg:block"></span> Main Course
+                    </button>
+                    <button class="js-category-filter js-category-filter-favourite text-left text-sm tracking-wider uppercase flex items-center gap-3 text-gray-400 hover:text-offwhite transition-colors whitespace-nowrap">
+                        <span class="w-8 h-[1px] bg-transparent hidden lg:block"></span> Favourites
                     </button>
                 </nav>
             </div>
@@ -121,88 +124,14 @@
 
     <!-- ================= RECIPE DETAILS MODAL ================= -->
     <!-- Add 'hidden' class to root div to hide. Removed for structural preview, assuming JS will control it. -->
-    <div class="recipe-modal-backdrop fixed inset-0 z-50  items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-md hidden transition-opacity">
-        
-        <div class="recipe-modal-window relative w-full max-w-5xl max-h-[90vh] bg-charcoal-800 rounded-lg shadow-2xl flex flex-col lg:flex-row overflow-hidden border border-white/10">
-            
-            <!-- Close Button -->
-            <button class="js-close-recipe-modal absolute top-4 right-4 z-20 w-10 h-10 bg-charcoal-900/80 hover:bg-gold-500 text-offwhite hover:text-charcoal-900 rounded-full flex items-center justify-center transition-colors">
-                <i class="fa-solid fa-times"></i>
-            </button>
+      <div class="recipe-modal-backdrop fixed inset-0 z-50  items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-md hidden transition-opacity"></div>
 
-            <!-- Left: Hero Image -->
-            <div class="w-full lg:w-2/5 h-64 lg:h-auto bg-charcoal-700 relative">
-                <img src="https://images.unsplash.com/photo-1626804475297-41609ea004eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Recipe Details" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-charcoal-800 to-transparent lg:hidden"></div>
-            </div>
-
-            <!-- Right: Content Scrollable -->
-            <div class="w-full lg:w-3/5 overflow-y-auto hide-scrollbar p-8 lg:p-12">
-                <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold">Main Course</span>
-                <h2 class="font-serif text-3xl lg:text-4xl text-offwhite mt-2 mb-6">Truffle Mushroom Risotto</h2>
-                
-                <div class="flex items-center gap-6 pb-6 border-b border-white/10 mb-8">
-                    <div class="flex flex-col">
-                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1">Prep Time</span>
-                        <span class="text-sm font-medium text-offwhite">15 Mins</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1">Cook Time</span>
-                        <span class="text-sm font-medium text-offwhite">30 Mins</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-xs text-gray-500 uppercase tracking-wider mb-1">Yields</span>
-                        <span class="text-sm font-medium text-offwhite">4 Servings</span>
-                    </div>
-                </div>
-
-                <!-- Ingredients -->
-                <div class="mb-10">
-                    <h4 class="font-serif text-xl text-gold-400 mb-4 italic">The Ingredients</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start text-sm text-gray-300">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
-                            1 ½ cups Arborio rice
-                        </li>
-                        <li class="flex items-start text-sm text-gray-300">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
-                            4 cups chicken or vegetable broth, warmed
-                        </li>
-                        <li class="flex items-start text-sm text-gray-300">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
-                            1 cup wild mushrooms (cremini, shiitake), sliced
-                        </li>
-                        <li class="flex items-start text-sm text-gray-300">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 mr-3 flex-shrink-0"></span>
-                            1 tbsp black truffle oil
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Instructions -->
-                <div>
-                    <h4 class="font-serif text-xl text-gold-400 mb-4 italic">Method of Preparation</h4>
-                    <ol class="space-y-6 list-none counter-reset-step">
-                        <li class="relative pl-8 text-sm text-gray-300 leading-relaxed">
-                            <span class="absolute left-0 top-0 font-serif text-gold-500 font-bold text-lg">1.</span>
-                            In a heavy saucepan, heat 2 tablespoons of olive oil over medium heat. Add the finely chopped shallots and sauté until translucent.
-                        </li>
-                        <li class="relative pl-8 text-sm text-gray-300 leading-relaxed">
-                            <span class="absolute left-0 top-0 font-serif text-gold-500 font-bold text-lg">2.</span>
-                            Stir in the Arborio rice, toasting it slightly for about 2 minutes. Pour in white wine and stir continuously until fully absorbed.
-                        </li>
-                        <li class="relative pl-8 text-sm text-gray-300 leading-relaxed">
-                            <span class="absolute left-0 top-0 font-serif text-gold-500 font-bold text-lg">3.</span>
-                            Begin adding the warm broth one ladle at a time, allowing the liquid to absorb before adding the next, stirring frequently.
-                        </li>
-                    </ol>
-                </div>
-            </div>
-        </div>
     </div>
+   
+    <!-- in extra and script.js -->
 
     <!-- ================= ADD RECIPE MODAL ================= -->
-    <div class="add-recipe-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-md  transition-opacity">
+    <div class="add-recipe-modal-backdrop fixed inset-0 z-50 flex hidden items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-md  transition-opacity">
         
         <div class="add-recipe-window relative w-full max-w-2xl bg-charcoal-800 rounded-lg shadow-2xl p-8 md:p-12 border border-white/10 max-h-[90vh] overflow-y-auto hide-scrollbar">
             
@@ -241,25 +170,26 @@
                 <div class="flex flex-col md:flex-row gap-6">
                  
                     <div class="flex-1">
-                        <label class="prep-time block text-xs uppercase tracking-widest text-gray-400 mb-2">Prep Time</label>
-                        <input type="url" class="js-input-image w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors" placeholder="15 mins">
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Prep Time</label>
+                        <input type="url" class="prep-time w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors" placeholder="15 mins">
                     </div>
                     <div class="flex-1">
-                        <label class="cook-time block text-xs uppercase tracking-widest text-gray-400 mb-2">Cook Time</label>
-                        <input type="url" class="js-input-image w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors" placeholder="40 mins">
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Cook Time</label>
+                        <input type="url" class="cook-time w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors" placeholder="40 mins">
                     </div>
                 </div>
 
                 <!-- Textarea: Ingredients -->
                 <div>
-                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Ingredients <span class="text-gray-600 capitalize tracking-normal">(comma separated)</span></label>
-                    <textarea class="js-input-ingredients w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors min-h-[100px]" placeholder="1 cup flour, 2 eggs, pinch of salt..."></textarea>
+                    <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Ingredients <span class="text-gray-600 capitalize tracking-normal">(one per line)</span></label>
+                    <textarea class="js-input-ingredients w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors min-h-[100px]" placeholder="1 cup flour&#10;2 eggs&#10;pinch of salt..."></textarea>
                 </div>
 
                 <!-- Textarea: Steps -->
                 <div>
                     <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Method</label>
-                    <textarea class="js-input-steps w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors min-h-[120px]" placeholder="Step 1..."></textarea>
+                    <textarea class="js-input-steps w-full bg-charcoal-900 border border-white/10 p-3 text-sm text-offwhite focus:outline-none focus:border-gold-500 transition-colors min-h-[120px]" placeholder="Heat oil in a pan and fry the onions until golden brown.
+Add garlic paste and chicken, then cook for 10 minutes. "></textarea>
                 </div>
 
                 <!-- Submit Button -->

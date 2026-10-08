@@ -1,6 +1,24 @@
 let categoriesContainer = document.querySelector(".recipe-grid")
 let recipeModalBackdrop = document.querySelector(".recipe-modal-backdrop")
+let addRecipeModalBackdrop = document.querySelector(".add-recipe-modal-backdrop")
+let addRecipeBtn = document.querySelector(".add-recipe-btn")
+let searchInput = document.querySelector(".js-search-input")
+let filterFavourite = document.querySelector(".js-category-filter-favourite")
+let allCategories = document.querySelector(".js-category-filter-allCategories")
 let closeRecipeModal = document.querySelector(".js-close-recipe-modal") || null;
+let closeAddRecipeModal = document.querySelector(".js-close-add-modal") || null;
+let recipeDeleteBtn = document.querySelector(".js-delete-btn") || null;
+
+let showFavourites = false;
+
+let saveRecipeBtn = document.querySelector(".js-save-recipe-btn");
+let titleInput = document.querySelector(".js-input-title");
+let categorySelect = document.querySelector(".js-input-category");
+let imageUrlInput = document.querySelector('.js-input-image'); // Pehla Image URL waala
+let ingredientsTextarea = document.querySelector('.js-input-ingredients');
+let stepsTextarea = document.querySelector('.js-input-steps');
+let prepTimeInput = document.querySelector('.prep-time');
+let cookTimeInput = document.querySelector('.cook-time');
 
 let recipeArray = JSON.parse(localStorage.getItem("Recipe_Data")) || []
 
@@ -8,81 +26,61 @@ function saveToLS() {
     localStorage.setItem("Recipe_Data", JSON.stringify(recipeArray))
 }
 
-recipeArray.push({
-    id: 1,
-    category: "Main Course",
-    title: "Classic Butter Chicken",
-    time: 25,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    prepTime: "20 Mins",
-    cookTime: "30 Mins",
-    servings: "4",
-    ingredients: [
-        "800g Chicken thighs (boneless, bite-sized cubes)",
-        "1 cup Plain yogurt",
-        "2 tbsp Lemon juice",
-        "1 tbsp Garam masala",
-        "2 cups Tomato puree",
-        "1 cup Heavy cream",
-        "100g Unsalted butter",
-        "2 tbsp Ginger-garlic paste"
-    ],
-    steps: [
-        "Chicken ko yogurt, lemon juice, aur masalon ke sath marinate karein aur kam se kam 30 minute ke liye rakh dein.",
-        "Ek bade pan mein butter garam karein aur marinate kiya hua chicken sunhara hone tak fry karein.",
-        "Usi pan mein ginger-garlic paste aur tomato puree dal kar 10 minute tak pakahein jab tak tel alag na ho jaye.",
-        "Heavy cream aur bacha hua butter shamil karein, phir chicken dal kar dhimi aanch par 5-7 minute ke liye dum par rakh dein."
-    ]
-},
-    {
-        id: 2,
-        category: "Dessert",
-        title: "Molten Chocolate Lava Cake",
-        time: 55,
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        prepTime: "15 Mins",
-        cookTime: "12 Mins",
-        servings: "2",
-        ingredients: [
-            "100g High-quality dark chocolate",
-            "50g Unsalted butter",
-            "2 Large eggs",
-            "1/4 cup Granulated sugar",
-            "2 tbsp All-purpose flour",
-            "A pinch of Salt"
-        ],
-        steps: [
-            "Oven ko 200°C par preheat karein aur ramekins (molds) ko butter aur cocoa powder se grease kar lein.",
-            "Chocolate aur butter ko ek bowl mein dal kar double boiler ya microwave mein melt karein aur thanda hone dein.",
-            "Ek alag bowl mein eggs aur sugar ko tab tak beat karein jab tak wo fluffy aur pale yellow na ho jaye.",
-            "Melted chocolate aur flour ko aahista se egg mixture mein fold karein, molds mein dalein aur 10-12 minute bake karein."
-        ]
-    },
-    {
-        id: 3,
-        category: "Beverage",
-        title: "Mint Lemonade",
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        time: 45,
-        prepTime: "5 Mins",
-        cookTime: "0 Mins",
-        servings: "2",
-        ingredients: [
-            "1/2 cup Fresh mint leaves",
-            "4 tbsp Lemon juice",
-            "3 tbsp Sugar (or honey)",
-            "2 cups Chilled water",
-            "1 cup Ice cubes",
-            "A pinch of Black salt"
-        ],
-        steps: [
-            "Mint leaves, lemon juice, sugar, aur black salt ko blender jag mein dalein.",
-            "Chilled water shamil karein aur blend karein jab tak mint achi tarah pees na jaye.",
-            "Glass mein ice cubes dalein, drink ko strain (chhan) kar ke serve karein."
-        ]
+allCategories.addEventListener("click" , () => {
+    renderRecipe(recipeArray);
+})
+
+searchInput.addEventListener("input", () => {
+    // console.log(searchInput.value);
+    let searchText = searchInput.value.toLowerCase();
+
+    let filteredRecipe = recipeArray.filter(recipe => recipe.title.toLowerCase().includes(searchText));
+    // console.log(filteredRecipe)
+    renderRecipe(filteredRecipe)
+})
+
+saveRecipeBtn.addEventListener("click", () => {
+
+    recipeArray.push({
+        id: Date.now(),
+        category: categorySelect.value,
+        title: titleInput.value.trim(),
+        image: imageUrlInput.value,
+        prepTime: prepTimeInput.value,
+        cookTime: cookTimeInput.value,
+        isFavourite: false,
+        servings: "4",
+        ingredients: ingredientsTextarea.value.split("\n").map(value => value.trim()).filter(item => item !== ""),
+        steps: stepsTextarea.value.split("\n").map(value => value.trim()).filter(item => item !== "")
     }
-)
-function renderRecipe() {
+    )
+    saveToLS()
+    renderRecipe(recipeArray)
+    addRecipeModalBackdrop.classList.add("hidden")
+
+
+    titleInput = "";
+    categorySelect = "";
+    imageUrlInput = "";
+    ingredientsTextarea = "";
+    stepsTextarea = "";
+    prepTimeInput = "";
+    cookTimeInput = "";
+
+})
+
+filterFavourite.addEventListener("click" , () => {
+    let ListToShow;
+        ListToShow = recipeArray.filter(recipe => recipe.isFavourite)
+        renderRecipe(ListToShow)
+  
+   if(ListToShow.length === 0){
+        categoriesContainer.innerHTML = `<p class="text-gray-400 flex items-center justify-center">No recipes found.</p>`;
+        return;
+    }
+})
+
+function renderRecipe(recipeArray) {
 
     categoriesContainer.innerHTML = "";
 
@@ -100,9 +98,9 @@ function renderRecipe() {
                         <img src="${recipe.image}" alt="${recipe.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out grayscale-[20%] group-hover:grayscale-0">
                         <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-charcoal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div class="absolute top-4 left-4 z-10">
-                            <button class="js-favorite-btn text-gold-500 hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center" data-id="${recipe.id}">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
+                           <button class="js-favorite-btn hover:scale-110 transition-transform bg-charcoal-900/40 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center ${recipe.isFavourite ? 'text-gold-500' : ''}" data-id="${recipe.id}">
+    <i class="fa-solid fa-heart"></i>
+</button>
                         </div>
                         <div class="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <button class="js-delete-btn text-gray-300 hover:text-red-400 bg-charcoal-900/60 hover:bg-charcoal-900 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center transition-all" data-id="${recipe.id}">
@@ -114,7 +112,7 @@ function renderRecipe() {
                         <span class="text-gold-500 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">${recipe.category}</span>
                         <h3 class="font-serif text-2xl text-offwhite mb-3 group-hover:text-gold-400 transition-colors">${recipe.title}</h3>
                         <div class="flex items-center gap-4 text-xs text-gray-400 font-light">
-                            <span><i class="fa-regular fa-clock mr-1.5"></i> ${recipe.time} min</span>
+                            <span><i class="fa-regular fa-clock mr-1.5"></i> ${recipe.cookTime} min</span>
                             <span class="w-1 h-1 rounded-full bg-gray-600"></span>
                             <span><i class="fa-solid fa-utensils mr-1.5"></i> ${recipe.servings} Servings</span>
                         </div>
@@ -135,7 +133,7 @@ function renderRecipe() {
         `;
     });
 }
-renderRecipe();
+renderRecipe(recipeArray)
 
 categoriesContainer.addEventListener("click", (e) => {
     if (e.target.closest(".js-open-recipe-modal")) {
@@ -145,14 +143,31 @@ categoriesContainer.addEventListener("click", (e) => {
         console.log(clickedRecipe);
         openModel(clickedRecipe)
     }
+    else if (e.target.closest(".js-delete-btn")) {
+        const clickedBtn = e.target.closest(".js-delete-btn");
+        const clickedBtnId = Number(clickedBtn.dataset.id);
+        recipeArray = recipeArray.filter(recipe => recipe.id !== clickedBtnId);
+        renderRecipe(recipeArray)
+    }
+    else if (e.target.closest(".js-favorite-btn")) {
+        let clickedBtn = e.target.closest(".js-favorite-btn");
+        const clickedBtnId = Number(clickedBtn.dataset.id); 
+        let starredRecipe = recipeArray.find(recipe => recipe.id === clickedBtnId);
+        if (starredRecipe) {
+            clickedBtn.classList.toggle("text-gold-500")   
+            starredRecipe.isFavourite = !starredRecipe.isFavourite;
+        }
+        saveToLS();
+    }
+}
 
-})
+)
 
 recipeModalBackdrop.addEventListener("click", (e) => {
     if (e.target.closest(".js-close-recipe-modal") || (e.target === recipeModalBackdrop)) {
         console.log("cross button clicked")
         recipeModalBackdrop.classList.add("hidden");
-  }
+    }
 })
 
 function openModel(recipe) {
@@ -219,3 +234,16 @@ function openModel(recipe) {
     recipeModalBackdrop.classList.remove("hidden");
 
 }
+
+addRecipeBtn.addEventListener("click", () => {
+    addRecipeModalBackdrop.classList.remove("hidden")
+})
+
+addRecipeModalBackdrop.addEventListener("click", (e) => {
+    if (e.target.closest(".js-close-add-modal")) {
+        addRecipeModalBackdrop.classList.add("hidden")
+
+    }
+})
+
+
